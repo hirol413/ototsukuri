@@ -54,7 +54,7 @@
     <body>
         <div class="square">
             <div class='center'>
-                <h1 class="title">投稿名</h1>
+                <h1 class="title">{{$post->title}}</h1>
                 <div class='imgsquare'>
                     <p>使用画像</p>
                     <button class="sbtn">再生</button>
@@ -69,7 +69,8 @@
                 </p>
                 
                 <div class="content__post">
-                    <h3>本文</h3>  
+                    <h3>本文</h3> 
+                    <p>{{$post->text}}</p>
                 </div>
                 <div class='field'>
                     
