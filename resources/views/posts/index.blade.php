@@ -42,11 +42,14 @@
             <option name="five" value="5">リバーブ</option>
         </select>
         <p>
+        @foreach ($posts as $post)
         <div class="square">
             <div class='center'>
                 <div class='posts'>
                     <div class='post'>
-                        <h2 class='title'>Title</h2>
+                        <h2 class='title'>
+                            <a href="/posts/{{$post->id}}">{{$post->title}}</a>
+                        </h2>
                         <button class="sbtn">再生</button>
                         <p class='tag'>タグ</p>
                         <p class='user_name'>username</p>
@@ -54,6 +57,10 @@
                 </div>
             </div>
         </div>
+        @endforeach
         </p>
+        <div class="footer">
+            <a href="/posts/create">新規投稿</a>
+        </div>
     </body>
 </html>
