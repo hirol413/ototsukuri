@@ -32,6 +32,24 @@
                 <h2>Body</h2>
                 <textarea name="post[text]" placeholder="説明文及び使用機材詳細入力"></textarea>
             </div>
+            <div class="tags">
+                <label for="tag-id">{{ __('Tag1') }}
+                <select class="form-select" id="category-id" name="category_id">
+                    @foreach ($tags as $tag)
+                        <option value="{{ $tag->id }}" @if(old('tag_id') == $tag->id) selected @endif>{{ $tag->tag_name }}</option>
+                    @endforeach
+                </select>
+                </label>
+            </div>
+
+            <div class="Tag">
+                <h2>Tag1</h2>
+                <input type="number" name="Tag1" placeholder="id"/>
+                <h2>Tag2</h2>
+                <input type="number" name="Tag2" placeholder="id"/>
+                <h2>Tag3</h2>
+                <input type="number" name="Tag3" placeholder="id"/>
+            </div>
             <input type="submit" value="投稿"/>
         </form>
         <div class="footer">
