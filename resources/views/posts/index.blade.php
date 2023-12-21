@@ -35,11 +35,9 @@
         <button class="btn">ベース</button>
         <button class="btn">その他</button>
         <select>
-            <option name="one" value="1">クリーン</option>
-            <option name="two" value="2">ドライブ</option>
-            <option name="three" value="3">コンプレッサー</option>
-            <option name="four" value="4">モジュレーション</option>
-            <option name="five" value="5">リバーブ</option>
+            @foreach($tags as $tag)
+                <option>{{$tag->name}}</option>
+            @endforeach
         </select>
         <p>
         @foreach ($posts as $post)
