@@ -25,14 +25,14 @@ class PostController extends Controller
     
     public function store(Request $request, Post $post)
     {
-        $input = $request['post'];
-        $post->fill($input)->save();
+        $input_post = $request['post'];
+        $input_tags = $request->tags_array;
+        $post->fill($input_post)->save();
         
-        //TagPost中間テーブルにTagIDとPostIDをinsert
-        //$input_tag[0] = $request->get('Tag1');
-        //$input_tag[1] = $request->get('Tag2');
-        //$input_tag[2] = $request->get('Tag3');
+        //TagPost中間テーブルにデータ保存
+        $post->tags()->attach($input_tags);
         
-        return redirect('/post/' . $post->id);
+        
+        return redirect('/posts/' . $post->id);
     }
 }

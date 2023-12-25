@@ -49,7 +49,11 @@
                             <a href="/posts/{{$post->id}}">{{$post->title}}</a>
                         </h2>
                         <button class="sbtn">再生</button>
-                        <p class='tag'>タグ</p>
+                        <p class='tag'>
+                        @foreach($post->tags as $tag)
+                            {{$tag->name}}
+                        @endforeach
+                        </p>
                         <p class='user_name'>username</p>
                     </div>
                 </div>
