@@ -14,7 +14,13 @@
             </div>
             <div class="instrument">
                 <h2>instrument</h2>
-                <input type="number" name="post[instruments_id]" placeholder="id"/>
+                <select name="post[instruments_id]">
+                    @foreach($instruments as $instrument)
+                        <option value="{{$instrument->id}}" selected>
+                            {{$instrument->name}}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="sound">
                 <h2>sound</h2>
