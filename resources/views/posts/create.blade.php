@@ -3,11 +3,22 @@
     <head>
         <meta charset="utf-8">
         <title>Blog</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
         <h1>Blog Name</h1>
         <form action="/posts" method="POST">
             @csrf
+            <div class="sounder">
+                <h2>Javascriptで録音するよ</h2>
+                <div id="app">
+                    <button class="btn btn-danger" type="button" v-if="status=='ready'" @click="startRecording">録音を開始する</button>
+                    <button class="btn btn-primary" type="button" v-if="status=='recording'" @click="stopRecording">録音を終了する</button>
+                    
+                    <audio id="audioElement" controls></audio>
+                </div>
+                
+            </div>
             <div class="profile">
                 <h2>profile(仮)</h2>
                 <input type="number" name="post[profiles_id]" placeholder="id"/>
@@ -54,5 +65,73 @@
         <div class="footer">
             <a href="/">戻る</a>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+        <script>
+            new Vue({
+                el:'#app',
+                data: {
+                status: 'init',     // 状況
+                recorder: null,     // 音声にアクセスする "MediaRecorder" のインスタンス
+                audioData: [],      // 入力された音声データ
+                audioExtension: ''  // 音声ファイルの拡張子
+                
+                },
+                methods:{
+                    startRecording() {
+    
+                        this.status = 'recording';
+                        this.audioData = [];
+                        this.recorder.start();
+                    
+                    },
+                    stopRecording() {
+                    
+                        this.recorder.stop();
+                        this.status = 'ready';
+                    
+                    },
+                    
+                    getExtension(audioType) {
+    
+                        let extension = 'wav';
+                        const matches = audioType.match(/audio\/([^;]+)/);
+                    
+                        if(matches) {
+                    
+                            extension = matches[1];
+                    
+                        }
+                    
+                        return '.'+ extension;
+                    
+                    }
+                },
+                mounted(){
+                    navigator.mediaDevices.getUserMedia({ audio: true })
+                        .then(stream => {
+                            //音声のストリームをMediaRecorderにわたす
+                            this.recorder = new MediaRecorder(stream);
+                            //dataavailableで音声データ取得
+                            this.recorder.addEventListener('dataavailable', e => {
+                    
+                                this.audioData.push(e.data);//取得したデータを格納
+                                this.audioExtension = this.getExtension(e.data.type);
+                    
+                            });
+                            //録音を止めるとデータを再生できる。取り直しも可能
+                            this.recorder.addEventListener('stop', () => {
+                    
+                                const audioBlob = new Blob(this.audioData);
+                                const url = URL.createObjectURL(audioBlob);
+                                const audioElement = document.getElementById('audioElement');
+                                audioElement.src = url;
+                                
+                            });
+                            this.status = 'ready';
+                    
+                        });
+                    }
+            })
+        </script>
     </body>
 </html>
