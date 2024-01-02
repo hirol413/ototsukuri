@@ -4,19 +4,22 @@
         <meta charset="utf-8">
         <title>Blog</title>
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
         <h1>Blog Name</h1>
-        <form action="/posts" method="POST">
+        <form id="wav_form"　enctype="multipart/form-data">
             @csrf
-            <div class="sounder">
+            <div id="app">
+            <div class="sound">
                 <h2>Javascriptで録音するよ</h2>
-                <div id="app">
+                
                     <button class="btn btn-danger" type="button" v-if="status=='ready'" @click="startRecording">録音を開始する</button>
                     <button class="btn btn-primary" type="button" v-if="status=='recording'" @click="stopRecording">録音を終了する</button>
                     
+                    
                     <audio id="audioElement" controls></audio>
-                </div>
+                
                 
             </div>
             <div class="profile">
@@ -33,10 +36,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="sound">
-                <h2>sound</h2>
-                <input type="text" name="post[sound]" placeholder="sound"/>
-            </div>
+            
             <div class="img">
                 <h2>img</h2>
                 <input type="text" name="post[img]" placeholder="img"/>
@@ -59,8 +59,9 @@
                 </label>
                 @endforeach
             </div>
-            
+            <!--<input type="submit" class="btn btn-success" v-if="status=='ready'" value="投稿"/>-->
             <input type="submit" value="投稿"/>
+            </div>
         </form>
         <div class="footer">
             <a href="/">戻る</a>
@@ -73,7 +74,8 @@
                 status: 'init',     // 状況
                 recorder: null,     // 音声にアクセスする "MediaRecorder" のインスタンス
                 audioData: [],      // 入力された音声データ
-                audioExtension: ''  // 音声ファイルの拡張子
+                audioExtension: '',  // 音声ファイルの拡張子
+                audioFile: null,
                 
                 },
                 methods:{
@@ -104,9 +106,69 @@
                     
                         return '.'+ extension;
                     
+                    },
+                    
+                    submitForm(e) {
+                        e.preventDefault();//ページ再読み込みさせない
+                        const wav_form = document.getElementById('wav_form');
+                        const formData = new FormData(wav_form);
+                        formData.append('audio', this.audioFile, 'recording.wav');
+                        for(let value of formData.entries()){
+                            console.log(value);
+                        }
+                        axios.post("/posts",formData)
+                        
+                        .then((res)=> {
+                            console.log('Server response:', res);
+                            console.log('num',res.data.post_id);
+                            window.location.href='/posts/' + res.data.post_id;
+                        })
+                        .catch(error => {
+                            console.error('Error uploading audio:', error);
+                            alert('音保存失敗');
+                        });
+                        /*fetch('/posts', {
+                            method: 'POST',
+                            body: formData,
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Server response:', data);
+                            alert('音が保存されました');
+                        })
+                        .catch(error => {
+                            console.error('Error uploading audio:', error);
+                            alert('音保存失敗');
+                        });*/
                     }
+                    
+                    /*async submitForm() {
+                        try {
+                            const formData = new FormData();
+                            formData.append('text_content', this.textContent);
+                            formData.append('audio', new Blob(this.audioData, { type: 'audio/wav' }), 'recording.wav');
+
+                            // 他のフォームデータも必要に応じて追加
+
+                            const response = await fetch('/posts', {
+                                method: 'POST',
+                                body: formData,
+                            });
+
+                            const data = await response.json();
+                            console.log('Server response:', data);
+
+                            // サーバーレスポンスに応じた処理を追加
+                        } catch (error) {
+                            console.error('Error submitting form:', error);
+                        }
+                    }*/
+                    
+                    
                 },
                 mounted(){
+                    const wav_form = document.getElementById('wav_form');
+                    wav_form.addEventListener('submit',this.submitForm);
                     navigator.mediaDevices.getUserMedia({ audio: true })
                         .then(stream => {
                             //音声のストリームをMediaRecorderにわたす
@@ -121,10 +183,23 @@
                             //録音を止めるとデータを再生できる。取り直しも可能
                             this.recorder.addEventListener('stop', () => {
                     
-                                const audioBlob = new Blob(this.audioData);
+                                const audioBlob = new Blob(this.audioData,{type: 'audio/wav'});
+                                //const audioBlob = new Blob(this.audioData);
+                                // 音声ファイルのFileオブジェクトを作成
+                                this.audioFile = new File([audioBlob], 'recording.wav', {type: "audio/wav"});
+                                
+                                // audioFileの確認
+                                console.log("【audioFile】");
+                                console.log(this.audioFile);
+                                
+                                
                                 const url = URL.createObjectURL(audioBlob);
                                 const audioElement = document.getElementById('audioElement');
                                 audioElement.src = url;
+                                
+                                
+                                
+                                //this.submitForm();
                                 
                             });
                             this.status = 'ready';
