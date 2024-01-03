@@ -43,7 +43,7 @@ class PostController extends Controller
         //TagPost中間テーブルにデータ保存
         $post->tags()->attach($input_tags);
         
-        
+        //js側で画面遷移させるためにpost_idを返す
         return response()->json(['success' => true, 'message' => 'Post uploaded and saved successfully', 'post_id'=> $post->id]);
     }
 }

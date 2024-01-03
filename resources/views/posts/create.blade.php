@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<x-app-layout>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -121,49 +122,14 @@
                         .then((res)=> {
                             console.log('Server response:', res);
                             console.log('num',res.data.post_id);
-                            window.location.href='/posts/' + res.data.post_id;
+                            window.location.href='/posts/' + res.data.post_id;//PostControllerからpost_idを受け取って画面遷移
                         })
                         .catch(error => {
                             console.error('Error uploading audio:', error);
                             alert('音保存失敗');
                         });
-                        /*fetch('/posts', {
-                            method: 'POST',
-                            body: formData,
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log('Server response:', data);
-                            alert('音が保存されました');
-                        })
-                        .catch(error => {
-                            console.error('Error uploading audio:', error);
-                            alert('音保存失敗');
-                        });*/
+                        
                     }
-                    
-                    /*async submitForm() {
-                        try {
-                            const formData = new FormData();
-                            formData.append('text_content', this.textContent);
-                            formData.append('audio', new Blob(this.audioData, { type: 'audio/wav' }), 'recording.wav');
-
-                            // 他のフォームデータも必要に応じて追加
-
-                            const response = await fetch('/posts', {
-                                method: 'POST',
-                                body: formData,
-                            });
-
-                            const data = await response.json();
-                            console.log('Server response:', data);
-
-                            // サーバーレスポンスに応じた処理を追加
-                        } catch (error) {
-                            console.error('Error submitting form:', error);
-                        }
-                    }*/
-                    
                     
                 },
                 mounted(){
@@ -189,17 +155,14 @@
                                 this.audioFile = new File([audioBlob], 'recording.wav', {type: "audio/wav"});
                                 
                                 // audioFileの確認
-                                console.log("【audioFile】");
-                                console.log(this.audioFile);
+                                //console.log("【audioFile】");
+                                //console.log(this.audioFile);
                                 
-                                
+                                //url作成後再生できるようにHTMLに渡す
                                 const url = URL.createObjectURL(audioBlob);
                                 const audioElement = document.getElementById('audioElement');
                                 audioElement.src = url;
                                 
-                                
-                                
-                                //this.submitForm();
                                 
                             });
                             this.status = 'ready';
@@ -210,3 +173,4 @@
         </script>
     </body>
 </html>
+</x-app-layout>
