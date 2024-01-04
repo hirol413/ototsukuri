@@ -23,13 +23,9 @@
                 
                 
             </div>
-            <div class="profile">
-                <h2>profile(仮)</h2>
-                <input type="number" name="post[profiles_id]" placeholder="id"/>
-            </div>
             <div class="instrument">
                 <h2>instrument</h2>
-                <select name="post[instruments_id]">
+                <select name="post[instrument_id]">
                     @foreach($instruments as $instrument)
                         <option value="{{$instrument->id}}" selected>
                             {{$instrument->name}}
