@@ -15,10 +15,9 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('profiles_id');
-            $table->foreignId('instruments_id');
-            $table->string('title');
-            $table->string('img');
+            $table->foreignId('user_id')->constrained();
+            $table->string('title',50);
+            $table->string('img')->nullable();
             $table->string('sound');
             $table->string('text');
             $table->timestamps();

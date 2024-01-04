@@ -58,14 +58,18 @@
                 <h1 class="title">{{$post->title}}</h1>
                 <div class='imgsquare'>
                     <p>使用画像</p>
-                    <button class="sbtn">再生</button>
+                    <div>
+                        <audio src="{{$post->sound}}" controls></audio>
+                    </div>
                 </div>
                 <p>
                 <div class='field'>
-                    <div class='usesqure'>使用楽器</div>
-                    <div class='usesqure'>タグ1</div>
-                    <div class='usesqure'>タグ2</div>
-                    <div class="usesqure">タグ3</div>
+                    <div class='usesqure'>instrument:{{$post->instrument->name}}</div>
+                    <div class='usesqure'>
+                    @foreach($post->tags as $tag)
+                        tag:{{$tag->name}}
+                    @endforeach
+                    </div>
                 </div>
                 </p>
                 
@@ -74,8 +78,8 @@
                     <p>{{$post->text}}</p>
                 </div>
                 <div class='field'>
-                    
-                    <div class='time'>投稿日時</div>
+                    <div class='username'>投稿者:{{$post->user->name}}</div>
+                    <div class='time'>投稿日時:{{$post->created_at}}</div>
                     <button align = "right" class="likes">いいね</button>
                 </div>
                 

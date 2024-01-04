@@ -6,18 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Instrument;
+use App\Models\User;
 use Cloudinary;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
     public function index(Post $post,Tag $tag,Instrument $instrument)//インポートしたPostモデルをインスタンス化して$postとして使用
     {
-        return view('posts.index')->with(['posts' => $post->get(),'tags' => $tag->get()]);
+        
+        return view('posts.index')->with(['posts' => $post->getPaginateByLimit(),'tags' => $tag->get()]);
     }
     
-    public function show(Post $post)
+    public function show(Post $post,Tag $tag)
     {
-        return view('posts.show')->with(['post' => $post]);
+        return view('posts.show')->with(['post' => $post,'tags' => $tag->get()]);
     }
     
     public function create(Tag $tag,Instrument $instrument)
@@ -29,11 +32,12 @@ class PostController extends Controller
     {
         
         $input_post = $request['post'];
+        $input_post += ['user_id'=>$request->user()->id];
         $input_tags = $request->tags_array;
         if($request->hasFile('audio')){
             $audioFile = $request->file('audio');
             $sound_url = Cloudinary::uploadFile($audioFile->getRealPath())->getSecurePath();
-            $input_post+=['sound'=>$sound_url];
+            $input_post += ['sound'=>$sound_url];
             //return response()->json(['success' => true, 'message' => 'Audio uploaded and saved successfully']);
         }
         //return response()->json(['success' => false, 'message' => 'Audio not found in the request']);
