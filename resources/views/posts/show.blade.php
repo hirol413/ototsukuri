@@ -49,42 +49,46 @@
             }
             .field{
                 display: flex;
+                margin: 0px auto;
+                width:1000px;
+            }
+            .center_field{
+                display: flex;
+                margin: 10px auto;
+                width: 300px;
             }
         </style>
     </head>
     <body>
-        <div class="square">
             <div class='center'>
-                <h1 class="title">{{$post->title}}</h1>
-                <div class='imgsquare'>
-                    <p>使用画像</p>
-                    <div>
-                        <audio src="{{$post->sound}}" controls></audio>
-                    </div>
+                <h1 class="title" style="font-size:30px;">{{$post->title}}</h1>
+                <div class='center_field'>
+                    <audio src="{{$post->sound}}" controls></audio>
                 </div>
-                <p>
-                <div class='field'>
-                    <div class='usesqure'>instrument:{{$post->instrument->name}}</div>
+                
+                <div class='center_field'>
+                    <div class='usesqure'>{{$post->instrument->name}}</div>
                     <div class='usesqure'>
                     @foreach($post->tags as $tag)
-                        tag:{{$tag->name}}
+                        {{$tag->name}}
                     @endforeach
                     </div>
                 </div>
-                </p>
+                
                 
                 <div class="content__post">
-                    <h3>本文</h3> 
-                    <p>{{$post->text}}</p>
+                    <h3>{{$post->text}}</h3>
                 </div>
                 <div class='field'>
                     <div class='username'>投稿者:{{$post->user->name}}</div>
+                    <!--<button align = "right" class="likes">いいね</button>-->
+                </div>
+                <div class='field'>
                     <div class='time'>投稿日時:{{$post->created_at}}</div>
-                    <button align = "right" class="likes">いいね</button>
+                    <!--<button align = "right" class="likes">いいね</button>-->
                 </div>
                 
             </div>
-        </div>
         
         <div class="content">
             

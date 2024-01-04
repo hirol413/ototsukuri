@@ -8,15 +8,13 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
-        <h1>Blog Name</h1>
         <form id="wav_form"　enctype="multipart/form-data">
             @csrf
             <div id="app">
             <div class="sound">
-                <h2>Javascriptで録音するよ</h2>
                 
-                    <button class="btn btn-danger" type="button" v-if="status=='ready'" @click="startRecording">録音を開始する</button>
-                    <button class="btn btn-primary" type="button" v-if="status=='recording'" @click="stopRecording">録音を終了する</button>
+                    <button class="btn btn-outline-danger" type="button" v-if="status=='ready'" @click="startRecording">録音を開始する</button>
+                    <button class="btn btn-outline-primary" type="button" v-if="status=='recording'" @click="stopRecording">録音を終了する</button>
                     
                     
                     <audio id="audioElement" controls></audio>

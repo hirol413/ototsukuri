@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\InstrumentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,7 @@ Route::controller(PostController::class)->middleware(['auth'])->group(function()
     Route::post('/posts','store')->name('show');
 });
 
-
+Route::get('/instruments/{instrument}', [InstrumentController::class,'index']);
 
 
 Route::middleware('auth')->group(function () {
