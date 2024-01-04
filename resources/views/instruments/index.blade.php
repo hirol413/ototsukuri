@@ -68,9 +68,9 @@
         @endforeach
         </p>
         <div class='paginate'>{{$posts->links()}}</div>
-        <!--<div class="footer">
+        <div class="footer">
             <a href="/posts/create">新規投稿</a>
-        </div>-->
+        </div>
     </body>
 </html>
 </x-app-layout>

@@ -14,4 +14,9 @@ class instrument extends Model
         {
             return $this->hasMany(Post::class);
         }
+        
+        public function getByInstrument(int $limit_count = 5)
+        {
+             return $this->posts()->with('instrument')->orderBy('updated_at', 'DESC')->paginate($limit_count);
+        }
 }
