@@ -63,6 +63,9 @@
             <div class='center'>
                 <h1 class="title" style="font-size:30px;">{{$post->title}}</h1>
                 <div class='center_field'>
+                    <img src="{{ $post->img}}" alt="画像はありません"/>
+                </div>
+                <div class='center_field'>
                     <audio src="{{$post->sound}}" controls></audio>
                 </div>
                 
