@@ -34,7 +34,7 @@
             
             <div class="img">
                 <h2>img</h2>
-                <input type="text" name="post[img]" placeholder="img"/>
+                <input type="file" name="image">
             </div>
             <div class="title">
                 <h2>Title</h2>

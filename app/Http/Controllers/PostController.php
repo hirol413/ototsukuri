@@ -38,9 +38,11 @@ class PostController extends Controller
             $audioFile = $request->file('audio');
             $sound_url = Cloudinary::uploadFile($audioFile->getRealPath())->getSecurePath();
             $input_post += ['sound'=>$sound_url];
-            //return response()->json(['success' => true, 'message' => 'Audio uploaded and saved successfully']);
         }
-        //return response()->json(['success' => false, 'message' => 'Audio not found in the request']);
+        if($request->hasFile('image')){
+            $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+            $input_post += ['img'=>$image_url];
+        }
             
         $post->fill($input_post)->save();
         
