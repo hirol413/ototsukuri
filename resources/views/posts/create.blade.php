@@ -56,7 +56,7 @@
         </form>
         <p style="color:red">※録音開始ボタンを押すと録音が開始されます。録音終了ボタンを押すと録音が終了します。</p>
         <p style="color:red">※画像、タグの投稿は任意です。</p>
-        <p style="color:red">※タイトルは50字、説明文は4000字<の文字数制限があります。/p>
+        <p style="color:red">※タイトルは50字、説明文は4000字の文字数制限があります。</p>
         <div class="footer">
             <a href="/">戻る</a>
         </div>
