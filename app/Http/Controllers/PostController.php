@@ -9,6 +9,7 @@ use App\Models\Instrument;
 use App\Models\User;
 use Cloudinary;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
@@ -28,7 +29,7 @@ class PostController extends Controller
         return view('posts.create')->with(['tags' => $tag->get(),'instruments' => $instrument->get()]);
     }
     
-    public function store(Request $request, Post $post)
+    public function store(PostRequest $request, Post $post)
     {
         
         $input_post = $request['post'];

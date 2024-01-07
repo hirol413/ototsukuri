@@ -12,17 +12,13 @@
             @csrf
             <div id="app">
             <div class="sound">
-                
-                    <button class="btn btn-outline-danger" type="button" v-if="status=='ready'" @click="startRecording">録音を開始する</button>
-                    <button class="btn btn-outline-primary" type="button" v-if="status=='recording'" @click="stopRecording">録音を終了する</button>
-                    
-                    
-                    <audio id="audioElement" controls></audio>
-                
-                
+                <p>音</p>
+                <button class="btn btn-outline-danger" type="button" v-if="status=='ready'" @click="startRecording">録音開始</button>
+                <button class="btn btn-outline-primary" type="button" v-if="status=='recording'" @click="stopRecording">録音終了</button>
+                <audio id="audioElement" controls></audio>
             </div>
             <div class="instrument">
-                <h2>instrument</h2>
+                <h2>楽器</h2>
                 <select name="post[instrument_id]">
                     @foreach($instruments as $instrument)
                         <option value="{{$instrument->id}}" selected>
@@ -33,19 +29,19 @@
             </div>
             
             <div class="img">
-                <h2>img</h2>
+                <h2>画像</h2>
                 <input type="file" name="image">
             </div>
             <div class="title">
-                <h2>Title</h2>
+                <h2>タイトル</h2>
                 <input type="text" name="post[title]" placeholder="投稿タイトル入力"/>
             </div>
             <div class="body">
-                <h2>Body</h2>
+                <h2>説明文</h2>
                 <textarea name="post[text]" placeholder="説明文及び使用機材詳細入力"></textarea>
             </div>
             <div>
-                <h2>Tag</h2>
+                <h2>タグ</h2>
                 @foreach($tags as $tag)
                 <label>
                     <input type="checkbox" value="{{$tag->id}}" name="tags_array[]">
@@ -58,6 +54,9 @@
             <input type="submit" value="投稿"/>
             </div>
         </form>
+        <p style="color:red">※録音開始ボタンを押すと録音が開始されます。録音終了ボタンを押すと録音が終了します。</p>
+        <p style="color:red">※画像、タグの投稿は任意です。</p>
+        <p style="color:red">※タイトルは50字、説明文は4000字<の文字数制限があります。/p>
         <div class="footer">
             <a href="/">戻る</a>
         </div>
@@ -120,7 +119,7 @@
                         })
                         .catch(error => {
                             console.error('Error uploading audio:', error);
-                            alert('音保存失敗');
+                            alert('未入力の項目があります');
                         });
                         
                     }
