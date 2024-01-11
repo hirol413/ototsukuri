@@ -11,6 +11,8 @@
 ## 概要
 
 本アプリは音作りへの理解を深められる場を作ることを目的としています。<br>
+アプリはこちら↓<br>
+https://ototsukuri-8c4f7fd8896b.herokuapp.com/login<br>
 
 ## 開発環境
 
@@ -30,9 +32,10 @@
 <b>デプロイ：</b><br>
 - Heroku
 
-## データ構成
+## テスト用アカウント
 
-準備中
+メールアドレス:bonozeba@moimoi.re
+パスワード:test1234
 
 ## 機能
 
