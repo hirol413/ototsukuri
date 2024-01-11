@@ -24,32 +24,58 @@
                 color: black;
             }
             .square {
-                width: 350px;
+                width: 320px;
                 height: 200px;
                 border: solid 3px #000000;
+            }
+            .field{
+                display: flex;
+                justify-content: space-around;
+            }
+            .instfield{
+                display: flex;
+                justify-content: start;
+            }
+            .paginate{
+                text-align:center;
+            }
+            .title{
+                font-size:32px;
+            }
+            .posttitle{
+                font-size:20px;
+            }
+            .circle{
+                width: 100px;
+                height: 30px;
+                border-radius: 50px;
+                border: 1px solid;
+                box-sizing: border-box;
             }
         </style>
     </head>
     <body>
-        <h1 class="center">投稿一覧</h1>
-        @foreach($instruments as $instrument)
-            <a href="/instruments/{{$instrument->id}}">{{$instrument->name}}</a>
-        @endforeach
-        <select>
-            @foreach($tags as $tag)
-                <option>{{$tag->name}}</option>
+        <h1 class="title center">投稿一覧</h1>
+        <br><br>
+        <div class="instfield">
+            @foreach($instruments as $instrument)
+            <div class="circle center">
+                <a href="/instruments/{{$instrument->id}}">{{$instrument->name}}</a>
+            </div>
             @endforeach
-        </select>
+        </div>
+        <br><br>
         <p>
+        <div class="field">
         @foreach ($posts as $post)
+        
         <div class="square">
             <div class='center'>
                 <div class='posts'>
                     <div class='post'>
-                        <h2 class='title'>
+                        <h2 class='posttitle'>
                             <a href="/posts/{{$post->id}}">{{$post->title}}</a>
                         </h2>
-                        <!--<button class="sbtn">再生</button>-->
                         <div>
                             <audio src="{{$post->sound}}" controls></audio>
                         </div>
@@ -65,12 +91,11 @@
             </div>
             <p class='user_name'>投稿者:{{$post->user->name}}</p>
         </div>
+        
         @endforeach
+        </div>
         </p>
         <div class='paginate'>{{$posts->links()}}</div>
-        <div class="footer">
-            <a href="/posts/create">新規投稿</a>
-        </div>
     </body>
 </html>
 </x-app-layout>
