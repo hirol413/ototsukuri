@@ -55,7 +55,11 @@
         </style>
     </head>
     <body>
-        <h1 class="title center">投稿一覧</h1>
+        <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('投稿一覧') }}
+            </h2>
+        </x-slot>
         <br><br>
         <div class="instfield">
             @foreach($instruments as $instrument)

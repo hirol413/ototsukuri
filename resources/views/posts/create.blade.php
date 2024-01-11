@@ -6,19 +6,40 @@
         <title>Blog</title>
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <style>
+            .center{
+                text-align:center;
+            }
+            
+            .field{
+                display: flex;
+                justify-content: space-around;
+            }
+            .centerblock{
+                display: block;
+                margin:auto;
+            }
+            </style>
     </head>
     <body>
+        <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('新規投稿') }}
+            </h2>
+        </x-slot>
+        <br><br>
         <form id="wav_form"　enctype="multipart/form-data">
             @csrf
             <div id="app">
-            <div class="sound">
-                <p>音</p>
-                <button class="btn btn-outline-danger" type="button" v-if="status=='ready'" @click="startRecording">録音開始</button>
-                <button class="btn btn-outline-primary" type="button" v-if="status=='recording'" @click="stopRecording">録音終了</button>
-                <audio id="audioElement" controls></audio>
+            <div class="sound center">
+                <button class="btn btn-outline-danger btn-lg" type="button" v-if="status=='ready'" @click="startRecording">録音開始</button>
+                <button class="btn btn-outline-primary btn-lg" type="button" v-if="status=='recording'" @click="stopRecording">録音終了</button>
+                
+                <audio id="audioElement" class="centerblock" v-if="status=='ready'" controls>このブラウザは音の再生に対応していません</audio>
             </div>
-            <div class="instrument">
-                <h2>楽器</h2>
+            <br>
+            <div class="instrument center">
+                <h2>使用楽器選択</h2>
                 <select name="post[instrument_id]">
                     @foreach($instruments as $instrument)
                         <option value="{{$instrument->id}}" selected>
@@ -27,21 +48,24 @@
                     @endforeach
                 </select>
             </div>
-            
-            <div class="img">
-                <h2>画像</h2>
+            <br>
+            <div class="img center">
+                <h2>画像選択（任意）</h2>
                 <input type="file" name="image">
             </div>
-            <div class="title">
+            <br>
+            <div class="title center">
                 <h2>タイトル</h2>
-                <input type="text" name="post[title]" placeholder="投稿タイトル入力"/>
+                <input type="text" name="post[title]" size="81" placeholder="投稿タイトル入力"/>
             </div>
-            <div class="body">
+            <br>
+            <div class="body center">
                 <h2>説明文</h2>
-                <textarea name="post[text]" placeholder="説明文及び使用機材詳細入力"></textarea>
+                <textarea name="post[text]" cols="80" rows="6" placeholder="説明文及び使用機材詳細入力"></textarea>
             </div>
-            <div>
-                <h2>タグ</h2>
+            <br>
+            <div class="tag center">
+                <h2>タグ選択</h2>
                 @foreach($tags as $tag)
                 <label>
                     <input type="checkbox" value="{{$tag->id}}" name="tags_array[]">
@@ -50,15 +74,17 @@
                 </label>
                 @endforeach
             </div>
-            <!--<input type="submit" class="btn btn-success" v-if="status=='ready'" value="投稿"/>-->
-            <input type="submit" value="投稿"/>
+            <br>
+            <div class="center">
+                <input type="submit" value="投稿"/>
+            </div>
             </div>
         </form>
-        <p style="color:red">※録音開始ボタンを押すと録音が開始されます。録音終了ボタンを押すと録音が終了します。</p>
-        <p style="color:red">※画像、タグの投稿は任意です。</p>
-        <p style="color:red">※タイトルは50字、説明文は4000字の文字数制限があります。</p>
-        <div class="footer">
-            <a href="/">戻る</a>
+        <br><br>
+        <div class ="center">
+            <p style="color:red">※録音開始ボタンを押すと録音が開始されます。録音終了ボタンを押すと録音が終了します。</p>
+            <p style="color:red">※画像、タグの投稿は任意です。</p>
+            <p style="color:red">※タイトルは50字、説明文は4000字の文字数制限があります。</p>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
         <script>
