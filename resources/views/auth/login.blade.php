@@ -44,4 +44,7 @@
             </x-primary-button>
         </div>
     </form>
+    <div class="footer">
+        <a href="/register">register</a>
+    </div>
 </x-guest-layout>
