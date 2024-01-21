@@ -26,7 +26,6 @@
             .square {
                 width: 320px;
                 height: 200px;
-                border: solid 3px #000000;
             }
             .field{
                 display: flex;
@@ -74,26 +73,28 @@
         @foreach ($posts as $post)
         
         <div class="square">
-            <div class='center'>
-                <div class='posts'>
-                    <div class='post'>
-                        <h2 class='posttitle'>
-                            <a href="/posts/{{$post->id}}">{{$post->title}}</a>
-                        </h2>
-                        <div>
-                            <audio src="{{$post->sound}}" controls></audio>
+            <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg ">
+                <div class='center'>
+                    <div class='posts'>
+                        <div class='post'>
+                            <h2 class='posttitle'>
+                                <a href="/posts/{{$post->id}}">{{$post->title}}</a>
+                            </h2>
+                            <div>
+                                <audio src="{{$post->sound}}" controls></audio>
+                            </div>
+                            <p class='tag'>
+                            @foreach($post->tags as $tag)
+                                タグ:{{$tag->name}}
+                            @endforeach
+                            </p>
+                            <p class='instrument_name'>使用楽器:{{$post->instrument->name}}</p>
+                            
                         </div>
-                        <p class='tag'>
-                        @foreach($post->tags as $tag)
-                            タグ:{{$tag->name}}
-                        @endforeach
-                        </p>
-                        <p class='instrument_name'>使用楽器:{{$post->instrument->name}}</p>
-                        
                     </div>
                 </div>
+                <p class='user_name'>投稿者:{{$post->user->name}}</p>
             </div>
-            <p class='user_name'>投稿者:{{$post->user->name}}</p>
         </div>
         
         @endforeach

@@ -15,13 +15,7 @@ use App\Http\Controllers\InstrumentController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/', function() {
-    return view('posts.index');
-});*/
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -30,7 +24,7 @@ Route::controller(PostController::class)->middleware(['auth'])->group(function()
     Route::get('/','index')->name('index');
     Route::get('/posts/create','create')->name('create');
     Route::get('/posts/{post}','show')->name('show');
-    Route::post('/posts','store')->name('show');
+    Route::post('/posts','store')->name('store');
 });
 
 Route::get('/instruments/{instrument}', [InstrumentController::class,'index']);
