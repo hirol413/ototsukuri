@@ -113,7 +113,7 @@
                     
                     },
                     
-                    getExtension(audioType) {
+                    /*getExtension(audioType) {
     
                         let extension = 'wav';
                         const matches = audioType.match(/audio\/([^;]+)/);
@@ -126,16 +126,16 @@
                     
                         return '.'+ extension;
                     
-                    },
+                    },*/
                     
                     submitForm(e) {
                         e.preventDefault();//ページ再読み込みさせない
                         const wav_form = document.getElementById('wav_form');
                         const formData = new FormData(wav_form);
                         formData.append('audio', this.audioFile, 'recording.wav');
-                        for(let value of formData.entries()){
+                        /*for(let value of formData.entries()){
                             console.log(value);
-                        }
+                        }*/
                         axios.post("/posts",formData)
                         
                         .then((res)=> {
@@ -162,20 +162,18 @@
                             this.recorder.addEventListener('dataavailable', e => {
                     
                                 this.audioData.push(e.data);//取得したデータを格納
-                                this.audioExtension = this.getExtension(e.data.type);
+                                //this.audioExtension = this.getExtension(e.data.type);
                     
                             });
                             //録音を止めるとデータを再生できる。取り直しも可能
                             this.recorder.addEventListener('stop', () => {
                     
-                                const audioBlob = new Blob(this.audioData,{type: 'audio/wav'});
-                                //const audioBlob = new Blob(this.audioData);
+                                //const audioBlob = new Blob(this.audioData,{type: 'audio/wav'});
+                                const audioBlob = new Blob(this.audioData);
                                 // 音声ファイルのFileオブジェクトを作成
-                                this.audioFile = new File([audioBlob], 'recording.wav', {type: "audio/wav"});
+                                //this.audioFile = new File([audioBlob], 'recording.wav', {type: "audio/wav"});
+                                this.audioFile = new File([audioBlob], 'recording.wav');
                                 
-                                // audioFileの確認
-                                //console.log("【audioFile】");
-                                //console.log(this.audioFile);
                                 
                                 //url作成後再生できるようにHTMLに渡す
                                 const url = URL.createObjectURL(audioBlob);
